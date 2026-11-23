@@ -72,7 +72,7 @@
       background-color: var(--bg);
       color: var(--text);
       margin: 0;
-      padding: 8px;
+      padding: 9px;
     }
     .container {
       max-width: 480px;
@@ -81,20 +81,20 @@
     .card {
       background: var(--card);
       border-radius: 12px;
-      padding: 12px 13px;
+      padding: 14px 14px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
     .card.editing-mode {
       border: 2px solid var(--edit);
     }
 
-    /* サマリー（程よくゆとりを持たせた3列） */
+    /* サマリー（3列） */
     .summary-header {
       font-size: 12px;
       font-weight: bold;
       color: var(--primary);
-      margin-bottom: 7px;
+      margin-bottom: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -108,7 +108,7 @@
       background: #f8fafd;
       border: 1px solid #e4ebf5;
       border-radius: 8px;
-      padding: 7px 6px;
+      padding: 9px 6px;
       text-align: center;
     }
     .stat-box.transfer {
@@ -118,7 +118,7 @@
     }
     .stat-label { font-size: 10.5px; color: var(--sub); line-height: 1.2; }
     .stat-box.transfer .stat-label { color: #174ea6; font-weight: bold; }
-    .stat-val { font-size: 15px; font-weight: bold; margin-top: 3px; line-height: 1.2; }
+    .stat-val { font-size: 15.5px; font-weight: bold; margin-top: 3px; line-height: 1.2; }
 
     /* 修正バナー＆上部削除 */
     .edit-banner {
@@ -139,7 +139,7 @@
     }
     .top-delete-btn {
       width: 100%;
-      padding: 8px;
+      padding: 9px;
       border-radius: 7px;
       font-size: 13px;
       font-weight: bold;
@@ -149,12 +149,12 @@
       color: var(--danger);
     }
 
-    /* 支払者＆負担割合（1行横並び・高さゆとり） */
+    /* 支払者＆負担割合（1行横並び） */
     .top-controls-row {
       display: grid;
       grid-template-columns: 0.85fr 1.15fr;
       gap: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 11px;
     }
     .mini-label {
       font-size: 11px;
@@ -175,9 +175,9 @@
       gap: 4px;
     }
     .payer-btn, .share-btn {
-      padding: 8px 2px;
+      padding: 9px 2px;
       border: 1.5px solid var(--border);
-      border-radius: 7px;
+      border-radius: 8px;
       text-align: center;
       font-weight: bold;
       font-size: 13px;
@@ -198,13 +198,13 @@
       color: #137333;
     }
 
-    /* レシート撮影エリア（押しやすい高さ） */
+    /* レシート撮影エリア（ボタン大型化で押しやすく調整） */
     .receipt-area {
       background: linear-gradient(135deg, #e6f4ea 0%, #e8f0fe 100%);
       border: 1.5px dashed #34a853;
-      border-radius: 10px;
-      padding: 10px 10px;
-      margin-bottom: 9px;
+      border-radius: 11px;
+      padding: 12px 11px;
+      margin-bottom: 11px;
     }
     .receipt-area.loading {
       opacity: 0.7;
@@ -214,11 +214,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 7px;
+      margin-bottom: 9px;
       gap: 6px;
     }
     .receipt-title {
-      font-size: 12.5px;
+      font-size: 13px;
       font-weight: bold;
       color: var(--ai);
     }
@@ -229,8 +229,8 @@
       background: #ffffff;
       border: 1px solid #34a853;
       border-radius: 14px;
-      padding: 3px 9px;
-      font-size: 11px;
+      padding: 4px 10px;
+      font-size: 11.5px;
       font-weight: bold;
       color: var(--ai);
       cursor: pointer;
@@ -239,7 +239,7 @@
     .receipt-btn-group {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 10px;
     }
     .file-label-btn {
       position: relative;
@@ -247,19 +247,27 @@
       align-items: center;
       justify-content: center;
       background: #ffffff;
-      border: 1.5px solid #34a853;
+      border: 2px solid #34a853;
       color: var(--ai);
-      border-radius: 8px;
-      padding: 10px 6px;
-      font-size: 13.5px;
+      border-radius: 10px;
+      padding: 16px 8px;
+      font-size: 15px;
       font-weight: bold;
       cursor: pointer;
       overflow: hidden;
       margin: 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+    }
+    .file-label-btn:active {
+      background: #e6f4ea;
+      transform: scale(0.99);
     }
     .file-label-btn.gallery {
       border-color: #1a73e8;
       color: #1a73e8;
+    }
+    .file-label-btn.gallery:active {
+      background: #e8f0fe;
     }
     .file-label-btn input[type="file"] {
       position: absolute;
@@ -271,20 +279,20 @@
     }
     #receiptPreview {
       display: none;
-      max-height: 60px;
-      margin: 7px auto 0;
+      max-height: 64px;
+      margin: 8px auto 0;
       border-radius: 5px;
       border: 1px solid #ccc;
     }
 
-    /* フォーム入力欄（iPhoneズーム防止の16px維持＋高さ42pxでゆとり確保） */
+    /* フォーム入力欄（iPhoneズーム防止の16px維持＋高さ44px） */
     label.field-label {
       display: block;
       font-size: 11.5px;
       font-weight: bold;
       color: #444;
-      margin-top: 9px;
-      margin-bottom: 3px;
+      margin-top: 11px;
+      margin-bottom: 4px;
     }
     .row-2 {
       display: grid;
@@ -293,7 +301,7 @@
     }
     input[type="date"], input[type="text"], input[type="number"], select {
       width: 100%;
-      height: 42px;
+      height: 44px;
       padding: 6px 10px;
       font-size: 16px;
       border: 1px solid var(--border);
@@ -302,8 +310,8 @@
     }
     .chips {
       display: flex;
-      gap: 5px;
-      margin-top: 7px;
+      gap: 6px;
+      margin-top: 8px;
       overflow-x: auto;
       padding-bottom: 2px;
       -webkit-overflow-scrolling: touch;
@@ -313,8 +321,8 @@
       background: #f1f3f4;
       border: none;
       border-radius: 14px;
-      padding: 5px 10px;
-      font-size: 11.5px;
+      padding: 6px 11px;
+      font-size: 12px;
       color: #333;
       cursor: pointer;
       white-space: nowrap;
@@ -324,13 +332,13 @@
 
     button.submit-btn {
       width: 100%;
-      padding: 13px;
-      margin-top: 13px;
+      padding: 14px;
+      margin-top: 15px;
       background-color: var(--primary);
       color: #fff;
       border: none;
-      border-radius: 9px;
-      font-size: 15.5px;
+      border-radius: 10px;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
     }
@@ -344,7 +352,7 @@
       margin-top: 8px;
     }
     .sub-btn {
-      padding: 9px;
+      padding: 10px;
       border-radius: 8px;
       font-size: 13px;
       font-weight: bold;
@@ -364,7 +372,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 9px 4px;
+      padding: 10px 4px;
       border-bottom: 1px solid #f0f0f0;
       font-size: 13px;
       cursor: pointer;
