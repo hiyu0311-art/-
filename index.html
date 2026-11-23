@@ -72,7 +72,7 @@
       background-color: var(--bg);
       color: var(--text);
       margin: 0;
-      padding: 9px;
+      padding: 8px;
     }
     .container {
       max-width: 480px;
@@ -83,18 +83,23 @@
       border-radius: 12px;
       padding: 14px 14px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .card.editing-mode {
       border: 2px solid var(--edit);
     }
 
-    /* サマリー（3列） */
+    /* サマリーカード（スリムで細い高さ） */
+    .card.summary-card {
+      padding: 7px 10px;
+      margin-bottom: 8px;
+      border-radius: 10px;
+    }
     .summary-header {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
       color: var(--primary);
-      margin-bottom: 8px;
+      margin-bottom: 4px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -102,13 +107,13 @@
     .summary-row-3 {
       display: grid;
       grid-template-columns: 1fr 1fr 1.25fr;
-      gap: 7px;
+      gap: 5px;
     }
     .stat-box {
       background: #f8fafd;
       border: 1px solid #e4ebf5;
-      border-radius: 8px;
-      padding: 9px 6px;
+      border-radius: 6px;
+      padding: 4px 4px;
       text-align: center;
     }
     .stat-box.transfer {
@@ -116,9 +121,9 @@
       border-color: #d2e3fc;
       color: #174ea6;
     }
-    .stat-label { font-size: 10.5px; color: var(--sub); line-height: 1.2; }
+    .stat-label { font-size: 9.5px; color: var(--sub); line-height: 1.1; }
     .stat-box.transfer .stat-label { color: #174ea6; font-weight: bold; }
-    .stat-val { font-size: 15.5px; font-weight: bold; margin-top: 3px; line-height: 1.2; }
+    .stat-val { font-size: 13.5px; font-weight: bold; margin-top: 2px; line-height: 1.1; }
 
     /* 修正バナー＆上部削除 */
     .edit-banner {
@@ -421,8 +426,8 @@
 </head>
 <body>
   <div class="container">
-    <!-- 月間サマリー -->
-    <div class="card">
+    <!-- 月間サマリー（スリム版） -->
+    <div class="card summary-card">
       <div class="summary-header">
         <span id="monthTitle">集計読み込み中...</span>
         <span id="refreshBtn" style="cursor:pointer; font-weight:normal;" onclick="loadSummary(true)">↻ 更新</span>
