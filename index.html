@@ -26,12 +26,13 @@
       --sub: #666666;
       --border: #dcdfe6;
     }
+    * { box-sizing: border-box; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Segoe UI", sans-serif;
       background-color: var(--bg);
       color: var(--text);
       margin: 0;
-      padding: 12px;
+      padding: 6px;
     }
     .container {
       max-width: 480px;
@@ -39,83 +40,130 @@
     }
     .card {
       background: var(--card);
-      border-radius: 14px;
-      padding: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      margin-bottom: 14px;
+      border-radius: 10px;
+      padding: 9px 10px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+      margin-bottom: 7px;
     }
     .card.editing-mode {
       border: 2px solid var(--edit);
     }
+
+    /* サマリー（1画面収容のため超コンパクト3列） */
     .summary-header {
-      font-size: 13px;
+      font-size: 11px;
       font-weight: bold;
       color: var(--primary);
-      margin-bottom: 8px;
+      margin-bottom: 5px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+    .summary-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.25fr;
+      gap: 5px;
+    }
+    .stat-box {
+      background: #f8fafd;
+      border: 1px solid #e4ebf5;
+      border-radius: 6px;
+      padding: 4px 4px;
+      text-align: center;
+    }
+    .stat-box.transfer {
+      background: #e8f0fe;
+      border-color: #d2e3fc;
+      color: #174ea6;
+    }
+    .stat-label { font-size: 9.5px; color: var(--sub); line-height: 1.1; }
+    .stat-box.transfer .stat-label { color: #174ea6; font-weight: bold; }
+    .stat-val { font-size: 13px; font-weight: bold; margin-top: 2px; line-height: 1.1; }
+
+    /* 修正バナー＆上部削除 */
     .edit-banner {
       display: none;
       background: #fef7e0;
       color: #b06000;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
-      padding: 6px 10px;
-      border-radius: 6px;
-      margin-bottom: 8px;
+      padding: 4px 8px;
+      border-radius: 5px;
+      margin-bottom: 6px;
       justify-content: space-between;
       align-items: center;
     }
     .top-delete-area {
       display: none;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
     }
     .top-delete-btn {
       width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      font-size: 13px;
+      padding: 6px;
+      border-radius: 6px;
+      font-size: 12px;
       font-weight: bold;
       cursor: pointer;
-      border: 1.5px solid #f5c2c0;
+      border: 1px solid #f5c2c0;
       background: #fce8e6;
       color: var(--danger);
     }
-    .top-delete-btn:active {
-      background: #fad2cf;
+
+    /* 支払者＆負担割合（1行横並び） */
+    .top-controls-row {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 6px;
+      margin-bottom: 7px;
     }
-    .summary-grid {
+    .mini-label {
+      font-size: 10px;
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 3px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .payer-group {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 8px;
+      gap: 4px;
     }
-    .stat-box {
-      background: #f8fafd;
-      border: 1px solid #e4ebf5;
-      border-radius: 8px;
-      padding: 8px 10px;
+    .share-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3px;
+    }
+    .payer-btn, .share-btn {
+      padding: 5px 2px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
       text-align: center;
-    }
-    .stat-label { font-size: 11px; color: var(--sub); }
-    .stat-val { font-size: 17px; font-weight: bold; margin-top: 2px; }
-    .transfer-bar {
-      background: #e8f0fe;
-      color: #174ea6;
-      font-size: 13px;
       font-weight: bold;
-      text-align: center;
-      padding: 8px;
-      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--sub);
+      white-space: nowrap;
     }
+    .share-btn { font-size: 11px; }
+    .payer-btn.active {
+      border-color: var(--primary);
+      background: #e8f0fe;
+      color: var(--primary);
+    }
+    .share-btn.active {
+      border-color: #137333;
+      background: #e6f4ea;
+      color: #137333;
+    }
+
+    /* レシート撮影エリア（スリム版） */
     .receipt-area {
       background: linear-gradient(135deg, #e6f4ea 0%, #e8f0fe 100%);
-      border: 1.5px dashed #34a853;
-      border-radius: 10px;
-      padding: 12px;
-      text-align: center;
+      border: 1px dashed #34a853;
+      border-radius: 8px;
+      padding: 7px 8px;
       margin-bottom: 6px;
     }
     .receipt-area.loading {
@@ -126,37 +174,32 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
-      gap: 6px;
+      margin-bottom: 5px;
+      gap: 4px;
     }
     .receipt-title {
-      font-size: 13px;
+      font-size: 11.5px;
       font-weight: bold;
       color: var(--ai);
-      text-align: left;
     }
     .auto-toggle {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       background: #ffffff;
       border: 1px solid #34a853;
-      border-radius: 14px;
-      padding: 3px 8px;
-      font-size: 11px;
+      border-radius: 12px;
+      padding: 2px 7px;
+      font-size: 10.5px;
       font-weight: bold;
       color: var(--ai);
       cursor: pointer;
-      white-space: nowrap;
     }
-    .auto-toggle input {
-      margin: 0;
-      accent-color: #137333;
-    }
+    .auto-toggle input { margin: 0; accent-color: #137333; }
     .receipt-btn-group {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 6px;
     }
     .file-label-btn {
       position: relative;
@@ -166,9 +209,9 @@
       background: #ffffff;
       border: 1.5px solid #34a853;
       color: var(--ai);
-      border-radius: 8px;
-      padding: 11px 6px;
-      font-size: 13px;
+      border-radius: 7px;
+      padding: 7px 4px;
+      font-size: 12.5px;
       font-weight: bold;
       cursor: pointer;
       overflow: hidden;
@@ -188,110 +231,82 @@
     }
     #receiptPreview {
       display: none;
-      max-height: 90px;
-      margin: 8px auto 0;
-      border-radius: 6px;
+      max-height: 48px;
+      margin: 5px auto 0;
+      border-radius: 4px;
       border: 1px solid #ccc;
     }
 
+    /* フォーム入力欄（iPhoneズーム防止の16px維持＋高さ圧縮） */
     label.field-label {
       display: block;
-      font-size: 12px;
+      font-size: 10.5px;
       font-weight: bold;
       color: #444;
-      margin-top: 12px;
-      margin-bottom: 5px;
+      margin-top: 6px;
+      margin-bottom: 2px;
     }
     .row-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 6px;
     }
     input[type="date"], input[type="text"], input[type="number"], select {
       width: 100%;
-      padding: 11px;
+      height: 36px;
+      padding: 4px 8px;
       font-size: 16px;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      box-sizing: border-box;
+      border-radius: 7px;
       background: #fff;
-    }
-    .payer-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-    .share-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 6px;
-    }
-    .payer-btn, .share-btn {
-      padding: 9px 4px;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-      background: #fff;
-      color: var(--sub);
-    }
-    .share-btn {
-      font-size: 13px;
-    }
-    .payer-btn.active {
-      border-color: var(--primary);
-      background: #e8f0fe;
-      color: var(--primary);
-    }
-    .share-btn.active {
-      border-color: #137333;
-      background: #e6f4ea;
-      color: #137333;
     }
     .chips {
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 6px;
+      gap: 4px;
+      margin-top: 4px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      -webkit-overflow-scrolling: touch;
     }
+    .chips::-webkit-scrollbar { display: none; }
     .chip {
       background: #f1f3f4;
       border: none;
-      border-radius: 16px;
-      padding: 5px 10px;
-      font-size: 12px;
+      border-radius: 12px;
+      padding: 3px 8px;
+      font-size: 11px;
       color: #333;
       cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .chip:active { background: #dce3ea; }
+
     button.submit-btn {
       width: 100%;
-      padding: 14px;
-      margin-top: 18px;
+      padding: 10px;
+      margin-top: 9px;
       background-color: var(--primary);
       color: #fff;
       border: none;
-      border-radius: 10px;
-      font-size: 16px;
+      border-radius: 8px;
+      font-size: 14.5px;
       font-weight: bold;
       cursor: pointer;
     }
-    button.submit-btn.is-edit {
-      background-color: var(--edit);
-    }
+    button.submit-btn.is-edit { background-color: var(--edit); }
     button.submit-btn:disabled { opacity: 0.6; }
+
     .edit-actions {
       display: none;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 8px;
+      gap: 6px;
+      margin-top: 6px;
     }
     .sub-btn {
-      padding: 10px;
-      border-radius: 8px;
-      font-size: 13px;
+      padding: 7px;
+      border-radius: 7px;
+      font-size: 12px;
       font-weight: bold;
       cursor: pointer;
       border: 1px solid var(--border);
@@ -303,15 +318,16 @@
       background: #fce8e6;
       color: var(--danger);
     }
+
+    /* 直近履歴（スクロール下に配置） */
     .history-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 6px;
+      padding: 8px 4px;
       border-bottom: 1px solid #f0f0f0;
-      font-size: 13px;
+      font-size: 12.5px;
       cursor: pointer;
-      border-radius: 6px;
     }
     .history-item:active { background: #f5f7fa; }
     .history-item:last-child { border-bottom: none; }
@@ -319,36 +335,36 @@
       display: inline-block;
       background: #eef2f7;
       color: #334155;
-      padding: 2px 6px;
+      padding: 1px 5px;
       border-radius: 4px;
-      font-size: 11px;
+      font-size: 10.5px;
       margin-right: 4px;
     }
     .share-badge {
       display: inline-block;
       background: #fef7e0;
       color: #b06000;
-      padding: 1px 5px;
-      border-radius: 4px;
-      font-size: 10px;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 9.5px;
       font-weight: bold;
-      margin-left: 4px;
+      margin-left: 3px;
     }
     .edit-hint {
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--primary);
-      margin-left: 6px;
+      margin-left: 5px;
     }
     .toast {
       position: fixed;
-      bottom: 20px;
+      bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
       background: #323232;
       color: #fff;
-      padding: 10px 18px;
-      border-radius: 24px;
-      font-size: 14px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
       display: none;
       z-index: 100;
       white-space: nowrap;
@@ -357,63 +373,62 @@
 </head>
 <body>
   <div class="container">
-    <!-- 月間サマリー -->
+    <!-- 月間サマリー（超コンパクト3列） -->
     <div class="card">
       <div class="summary-header">
         <span id="monthTitle">集計読み込み中...</span>
         <span id="refreshBtn" style="cursor:pointer; font-weight:normal;" onclick="loadSummary(true)">↻ 更新</span>
       </div>
-      <div class="summary-grid">
+      <div class="summary-row-3">
         <div class="stat-box">
-          <div class="stat-label">英之 負担合計</div>
+          <div class="stat-label">英之 負担</div>
           <div class="stat-val" id="hideyukiSum">-</div>
         </div>
         <div class="stat-box">
-          <div class="stat-label">智子 負担合計</div>
+          <div class="stat-label">智子 負担</div>
           <div class="stat-val" id="tomokoSum">-</div>
         </div>
+        <div class="stat-box transfer">
+          <div class="stat-label" id="transferDir">精算</div>
+          <div class="stat-val" id="transferVal">-</div>
+        </div>
       </div>
-      <div class="transfer-bar" id="transferInfo">精算額を計算中...</div>
     </div>
 
     <!-- 入力・編集フォーム -->
     <div class="card" id="formCard">
       <div class="edit-banner" id="editBanner">
-        <span id="editLabel">修正モード（行番号: -）</span>
+        <span id="editLabel">修正モード</span>
         <span style="cursor:pointer; text-decoration:underline;" onclick="cancelEdit()">やめる</span>
       </div>
 
-      <!-- 修正モード時のみ表示される上部削除ボタン -->
       <div class="top-delete-area" id="topDeleteArea">
         <button type="button" class="top-delete-btn" onclick="confirmDelete()">🗑 この行を削除する</button>
       </div>
 
-      <!-- 支払者（URLパラメータまたは端末記憶で自動判定） -->
-      <div style="margin-bottom: 10px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-          <label class="field-label" style="margin:0;">支払者</label>
-          <span id="accountBadge" style="font-size:11px; color:#666;">端末に記憶</span>
+      <!-- 支払者 ＆ 負担割合（1行横並び） -->
+      <div class="top-controls-row">
+        <div>
+          <div class="mini-label"><span>支払者</span><span id="accountBadge" style="color:#888; font-weight:normal;"></span></div>
+          <div class="payer-group">
+            <div class="payer-btn" id="btnHideyuki" onclick="setPayer('英之', true)">英之</div>
+            <div class="payer-btn" id="btnTomoko" onclick="setPayer('智子', true)">智子</div>
+          </div>
         </div>
-        <div class="payer-group">
-          <div class="payer-btn" id="btnHideyuki" onclick="setPayer('英之', true)">英之</div>
-          <div class="payer-btn" id="btnTomoko" onclick="setPayer('智子', true)">智子</div>
-        </div>
-      </div>
-
-      <!-- 負担割合（通常は折半） -->
-      <div style="margin-bottom: 12px;">
-        <label class="field-label" style="margin-top:0;">負担割合（H・I列）</label>
-        <div class="share-group">
-          <div class="share-btn active" id="shareHalf" onclick="setShareMode('half')">折半 (50/50)</div>
-          <div class="share-btn" id="shareHideyuki" onclick="setShareMode('hideyuki')">英之 全額</div>
-          <div class="share-btn" id="shareTomoko" onclick="setShareMode('tomoko')">智子 全額</div>
+        <div>
+          <div class="mini-label"><span>負担割合</span></div>
+          <div class="share-group">
+            <div class="share-btn active" id="shareHalf" onclick="setShareMode('half')">折半</div>
+            <div class="share-btn" id="shareHideyuki" onclick="setShareMode('hideyuki')">英之全額</div>
+            <div class="share-btn" id="shareTomoko" onclick="setShareMode('tomoko')">智子全額</div>
+          </div>
         </div>
       </div>
 
       <!-- レシート読み取りエリア -->
       <div class="receipt-area" id="receiptBox">
         <div class="receipt-top-row">
-          <div class="receipt-title" id="receiptStatusText">🧾 レシート撮影（3枚までOK）</div>
+          <div class="receipt-title" id="receiptStatusText">🧾 レシート撮影（3枚まで）</div>
           <label class="auto-toggle">
             <input type="checkbox" id="autoRegisterCheck" checked>
             即自動登録
@@ -437,9 +452,19 @@
         <input type="hidden" id="payer" value="英之">
         <input type="hidden" id="shareMode" value="half">
 
-        <label class="field-label">日付（レシート日付がない場合の基準日）</label>
-        <input type="date" id="date" required onchange="onDateChange()">
+        <!-- 日付 ＆ 支払金額（2列横並び） -->
+        <div class="row-2">
+          <div>
+            <label class="field-label">日付（基準日）</label>
+            <input type="date" id="date" required onchange="onDateChange()">
+          </div>
+          <div>
+            <label class="field-label">支払金額（円）</label>
+            <input type="number" id="amount" inputmode="numeric" placeholder="例：1500" required>
+          </div>
+        </div>
 
+        <!-- 大項目 ＆ 中項目（2列横並び） -->
         <div class="row-2">
           <div>
             <label class="field-label">大項目（B列）</label>
@@ -451,25 +476,30 @@
           </div>
         </div>
 
-        <label class="field-label">小項目①：店名・施設（D列・シート自動連動）</label>
-        <select id="subItem1"></select>
+        <!-- 小項目① ＆ 小項目②（2列横並び） -->
+        <div class="row-2">
+          <div>
+            <label class="field-label">小項目①（D列・店名）</label>
+            <select id="subItem1"></select>
+          </div>
+          <div>
+            <label class="field-label">小項目②（E列・品目等）</label>
+            <input type="text" id="subItem2" placeholder="品目・リスト外店名">
+          </div>
+        </div>
+
+        <!-- クイック店名チップ（1行横スクロール） -->
         <div class="chips">
-          <button type="button" class="chip" onclick="setSub1('')">（指定なし）</button>
+          <button type="button" class="chip" onclick="setSub1('')">なし</button>
           <button type="button" class="chip" onclick="setSub1('京阪')">京阪</button>
           <button type="button" class="chip" onclick="setSub1('ライフ')">ライフ</button>
           <button type="button" class="chip" onclick="setSub1('イオン')">イオン</button>
           <button type="button" class="chip" onclick="setSub1('スギ薬局')">スギ薬局</button>
           <button type="button" class="chip" onclick="setSub1('マツキヨ')">マツキヨ</button>
           <button type="button" class="chip" onclick="setSub1('ダイソー')">ダイソー</button>
-          <button type="button" class="chip" onclick="setSub1('マクドナルド')">マクドナルド</button>
+          <button type="button" class="chip" onclick="setSub1('マクドナルド')">マック</button>
           <button type="button" class="chip" onclick="setSub1('すき家')">すき家</button>
         </div>
-
-        <label class="field-label">小項目②：自由入力・品目・リスト外の店名（E列）</label>
-        <input type="text" id="subItem2" placeholder="例：オムツ、駐輪場、リスト外の店名">
-
-        <label class="field-label">支払金額（F列・円）</label>
-        <input type="number" id="amount" inputmode="numeric" placeholder="例：1500" required>
 
         <button type="submit" class="submit-btn" id="submitBtn">手動でスプレッドシートに登録</button>
 
@@ -483,9 +513,9 @@
     <!-- 直近履歴 -->
     <div class="card">
       <div class="summary-header">
-        <span>直近の登録履歴 <span style="font-weight:normal; font-size:11px; color:#666;">（誤読があればタップで修正）</span></span>
+        <span>直近の登録履歴 <span style="font-weight:normal; font-size:10.5px; color:#666;">（タップで修正）</span></span>
       </div>
-      <div id="recentList" style="color:#888; font-size:13px;">読み込み中...</div>
+      <div id="recentList" style="color:#888; font-size:12px;">読み込み中...</div>
     </div>
   </div>
 
@@ -558,7 +588,7 @@
 
       const emptyOpt = document.createElement('option');
       emptyOpt.value = '';
-      emptyOpt.textContent = '（指定なし / リスト外は小項目②へ）';
+      emptyOpt.textContent = '（指定なし）';
       sub1Select.appendChild(emptyOpt);
 
       dynamicSubItem1List.forEach(shop => {
@@ -637,7 +667,7 @@
       const preview = document.getElementById('receiptPreview');
 
       box.classList.add('loading');
-      statusText.textContent = isAuto ? '⚡ 解析＆自動登録中...' : '⚡ 高速解析中...';
+      statusText.textContent = isAuto ? '⚡ 解析＆登録中...' : '⚡ 解析中...';
 
       const objectUrl = URL.createObjectURL(file);
       const img = new Image();
@@ -686,7 +716,7 @@
             }
             renderSummary(res.summary);
             const totalAmount = res.registeredItems.reduce((sum, x) => sum + (Number(x.amount) || 0), 0);
-            statusText.textContent = `✅ ${res.registeredCount}件登録完了（計¥${totalAmount.toLocaleString()}）`;
+            statusText.textContent = `✅ ${res.registeredCount}件完了（計¥${totalAmount.toLocaleString()}）`;
             setShareMode('half');
             showToast(`${res.registeredCount}件を自動登録しました！`);
           } else {
@@ -698,13 +728,13 @@
             });
             if (json.items && json.items.length > 0) {
               applySingleReceipt(json.items[0]);
-              statusText.textContent = `✅ 読み取り完了（下で確認して登録）`;
+              statusText.textContent = `✅ 読取完了（確認して登録）`;
               showToast('フォームに入力しました');
             }
           }
         } catch (err) {
           alert('エラー: ' + err.message);
-          statusText.textContent = '🧾 レシート撮影（3枚までOK）';
+          statusText.textContent = '🧾 レシート撮影（3枚まで）';
         } finally {
           box.classList.remove('loading');
           inputEl.value = '';
@@ -714,7 +744,7 @@
         URL.revokeObjectURL(objectUrl);
         alert('画像の読み込みに失敗しました。');
         box.classList.remove('loading');
-        statusText.textContent = '🧾 レシート撮影（3枚までOK）';
+        statusText.textContent = '🧾 レシート撮影（3枚まで）';
         inputEl.value = '';
       };
       img.src = objectUrl;
@@ -750,7 +780,7 @@
       if (saveToDevice) {
         defaultPayer = name;
         localStorage.setItem("kakeibo_payer", name);
-        document.getElementById('accountBadge').textContent = `この端末の標準: ${name}`;
+        document.getElementById('accountBadge').textContent = `記憶済`;
       }
     }
 
@@ -786,8 +816,9 @@
         }
       } catch (err) {
         document.getElementById('monthTitle').textContent = '接続設定エラー';
-        document.getElementById('transferInfo').textContent = err.message;
-        document.getElementById('recentList').innerHTML = '';
+        document.getElementById('transferDir').textContent = 'エラー';
+        document.getElementById('transferVal').textContent = '未設定';
+        document.getElementById('recentList').textContent = err.message;
       }
     }
 
@@ -798,21 +829,25 @@
       if (!res.ok) {
         currentSummaryYm = "";
         document.getElementById('monthTitle').textContent = 'シート未作成';
-        document.getElementById('transferInfo').textContent = res.error;
-        document.getElementById('recentList').innerHTML = '';
+        document.getElementById('transferDir').textContent = '未作成';
+        document.getElementById('transferVal').textContent = '-';
+        document.getElementById('recentList').textContent = res.error;
         return;
       }
       currentSummaryYm = res.monthLabel.replace('/', '-');
-      document.getElementById('monthTitle').textContent = `${res.monthLabel} の集計`;
+      document.getElementById('monthTitle').textContent = `${res.monthLabel} 集計`;
       document.getElementById('hideyukiSum').textContent = '¥' + res.hideyukiTotal.toLocaleString();
       document.getElementById('tomokoSum').textContent = '¥' + res.tomokoTotal.toLocaleString();
 
       if (res.tomokoToHideyuki > 0) {
-        document.getElementById('transferInfo').textContent = `精算：智子 ⇒ 英之  ¥${res.tomokoToHideyuki.toLocaleString()}`;
+        document.getElementById('transferDir').textContent = '智子⇒英之';
+        document.getElementById('transferVal').textContent = '¥' + res.tomokoToHideyuki.toLocaleString();
       } else if (res.hideyukiToTomoko > 0) {
-        document.getElementById('transferInfo').textContent = `精算：英之 ⇒ 智子  ¥${res.hideyukiToTomoko.toLocaleString()}`;
+        document.getElementById('transferDir').textContent = '英之⇒智子';
+        document.getElementById('transferVal').textContent = '¥' + res.hideyukiToTomoko.toLocaleString();
       } else {
-        document.getElementById('transferInfo').textContent = '精算：差額なし（¥0）';
+        document.getElementById('transferDir').textContent = '精算差額';
+        document.getElementById('transferVal').textContent = '¥0';
       }
 
       recentCache = res.recent;
@@ -831,9 +866,9 @@
           <div class="history-item" onclick="startEdit(${idx})">
             <div>
               <div><span class="tag">${r.major}・${r.minor}</span><strong>${detail || '（項目なし）'}</strong>${shareTag}</div>
-              <div style="font-size:11px; color:#888; margin-top:2px;">${r.day}日 ・ 支払:${r.payer}<span class="edit-hint">✎ 修正</span></div>
+              <div style="font-size:10.5px; color:#888; margin-top:2px;">${r.day}日 ・ 支払:${r.payer}<span class="edit-hint">✎ 修正</span></div>
             </div>
-            <div style="font-weight:bold; font-size:14px;">¥${r.amount.toLocaleString()}</div>
+            <div style="font-weight:bold; font-size:13.5px;">¥${r.amount.toLocaleString()}</div>
           </div>
         `;
       }).join('');
@@ -862,7 +897,7 @@
       document.getElementById('formCard').classList.add('editing-mode');
       document.getElementById('editBanner').style.display = 'flex';
       document.getElementById('topDeleteArea').style.display = 'block';
-      document.getElementById('editLabel').textContent = `修正モード（${baseYm.replace('-', '/')} ${item.day}日 / ${item.row}行目）`;
+      document.getElementById('editLabel').textContent = `修正（${baseYm.replace('-', '/')} ${item.day}日 / ${item.row}行目）`;
       const btn = document.getElementById('submitBtn');
       btn.textContent = '修正内容を更新する';
       btn.classList.add('is-edit');
