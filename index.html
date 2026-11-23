@@ -442,7 +442,7 @@
           <div class="stat-val" id="tomokoSum">-</div>
         </div>
         <div class="stat-box transfer">
-          <div class="stat-label" id="transferDir">精算</div>
+          <div class="stat-label" id="transferDir">英之振込額</div>
           <div class="stat-val" id="transferVal">-</div>
         </div>
       </div>
@@ -869,7 +869,7 @@
         }
       } catch (err) {
         document.getElementById('monthTitle').textContent = '接続設定エラー';
-        document.getElementById('transferDir').textContent = 'エラー';
+        document.getElementById('transferDir').textContent = '英之振込額';
         document.getElementById('transferVal').textContent = '未設定';
         document.getElementById('recentList').textContent = err.message;
       }
@@ -882,7 +882,7 @@
       if (!res.ok) {
         currentSummaryYm = "";
         document.getElementById('monthTitle').textContent = 'シート未作成';
-        document.getElementById('transferDir').textContent = '未作成';
+        document.getElementById('transferDir').textContent = '英之振込額';
         document.getElementById('transferVal').textContent = '-';
         document.getElementById('recentList').textContent = res.error;
         return;
@@ -892,14 +892,12 @@
       document.getElementById('hideyukiSum').textContent = '¥' + res.hideyukiTotal.toLocaleString();
       document.getElementById('tomokoSum').textContent = '¥' + res.tomokoTotal.toLocaleString();
 
-      if (res.tomokoToHideyuki > 0) {
-        document.getElementById('transferDir').textContent = '智子⇒英之';
-        document.getElementById('transferVal').textContent = '¥' + res.tomokoToHideyuki.toLocaleString();
-      } else if (res.hideyukiToTomoko > 0) {
-        document.getElementById('transferDir').textContent = '英之⇒智子';
+      document.getElementById('transferDir').textContent = '英之振込額';
+      if (res.hideyukiToTomoko > 0) {
         document.getElementById('transferVal').textContent = '¥' + res.hideyukiToTomoko.toLocaleString();
+      } else if (res.tomokoToHideyuki > 0) {
+        document.getElementById('transferVal').innerHTML = `¥0 <span style="font-size:10px; font-weight:normal;">(受取¥${res.tomokoToHideyuki.toLocaleString()})</span>`;
       } else {
-        document.getElementById('transferDir').textContent = '精算差額';
         document.getElementById('transferVal').textContent = '¥0';
       }
 
