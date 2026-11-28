@@ -7,39 +7,93 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="家計簿">
   <meta name="application-name" content="家計簿">
-  <meta name="theme-color" content="#1a73e8">
+  <meta name="theme-color" content="#1e8e3e">
   <title>家計簿</title>
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%231a73e8'/%3E%3Crect x='42' y='30' width='96' height='120' rx='14' fill='%23ffffff'/%3E%3Crect x='42' y='30' width='18' height='120' rx='6' fill='%231557b0'/%3E%3Ctext x='98' y='108' font-family='sans-serif' font-size='56' font-weight='bold' fill='%231a73e8' text-anchor='middle'%3E%C2%A5%3C/text%3E%3C/svg%3E">
+  <!-- ブラウザタブ・Android用アイコン -->
+  <link id="faviconLink" rel="icon" type="image/png" href="">
+  <!-- iPhoneホーム画面用アイコン -->
   <link id="appleTouchIcon" rel="apple-touch-icon" sizes="180x180" href="">
 
   <script>
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwlYYUm64xZ19JTQAWgDhGo4Z_apS6nrQ6MC2x803wLDRHDxl2l2NGDC6EBFhYI5JzRaQ/exec";
     const APP_SECRET = "sugahara-kakeibo-2026";
 
+    // 温かみのあるグリーン＆レシートアイコン（180x180 PNG）を自動生成してAndroid/iPhone両方に適用
     (function generateAppIcon() {
       try {
         const canvas = document.createElement('canvas');
         canvas.width = 180;
         canvas.height = 180;
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#1a73e8';
+
+        // 1. 温かみのあるグリーン背景（グラデーション）
+        const grad = ctx.createLinearGradient(0, 0, 180, 180);
+        grad.addColorStop(0, '#34a853');
+        grad.addColorStop(1, '#188038');
+        ctx.fillStyle = grad;
         ctx.fillRect(0, 0, 180, 180);
+
+        // 2. 白いレシート本体（上部角丸＋下部ギザギザ）
+        const x = 44, y = 26, w = 92, h = 122;
+        ctx.save();
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.16)';
+        ctx.shadowBlur = 10;
+        ctx.shadowOffsetY = 4;
+
         ctx.fillStyle = '#ffffff';
         ctx.beginPath();
-        ctx.roundRect(42, 30, 96, 120, 14);
+        ctx.moveTo(x + 12, y);
+        ctx.lineTo(x + w - 12, y);
+        ctx.quadraticCurveTo(x + w, y, x + w, y + 12);
+        ctx.lineTo(x + w, y + h);
+
+        // 下部のレシートギザギザ（6山）
+        const teeth = 6;
+        const toothW = w / teeth;
+        for (let i = teeth; i > 0; i--) {
+          const tx = x + i * toothW;
+          ctx.lineTo(tx - toothW / 2, y + h - 8);
+          ctx.lineTo(tx - toothW, y + h);
+        }
+
+        ctx.lineTo(x, y + 12);
+        ctx.quadraticCurveTo(x, y, x + 12, y);
+        ctx.closePath();
         ctx.fill();
-        ctx.fillStyle = '#1557b0';
+        ctx.restore();
+
+        // 3. レシート上部の明細ライン（淡いグリーン）
+        ctx.fillStyle = '#ceead6';
         ctx.beginPath();
-        ctx.roundRect(42, 30, 18, 120, 6);
+        ctx.roundRect(x + 16, y + 20, 42, 7, 3.5);
+        ctx.roundRect(x + 64, y + 20, 14, 7, 3.5);
+        ctx.roundRect(x + 16, y + 34, 34, 7, 3.5);
+        ctx.roundRect(x + 60, y + 34, 18, 7, 3.5);
         ctx.fill();
-        ctx.fillStyle = '#1a73e8';
-        ctx.font = 'bold 58px -apple-system, BlinkMacSystemFont, sans-serif';
+
+        // 区切り点線
+        ctx.strokeStyle = '#a8dab5';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(x + 14, y + 52);
+        ctx.lineTo(x + w - 14, y + 52);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // 4. 中央下の「¥」マーク
+        ctx.fillStyle = '#188038';
+        ctx.font = 'bold 48px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('¥', 98, 94);
-        const link = document.getElementById('appleTouchIcon');
-        if (link) link.href = canvas.toDataURL('image/png');
+        ctx.fillText('¥', x + w / 2, y + 86);
+
+        const pngUrl = canvas.toDataURL('image/png');
+        const appleLink = document.getElementById('appleTouchIcon');
+        const favLink = document.getElementById('faviconLink');
+        if (appleLink) appleLink.href = pngUrl;
+        if (favLink) favLink.href = pngUrl;
       } catch (e) {}
     })();
   </script>
